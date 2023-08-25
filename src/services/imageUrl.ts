@@ -5,9 +5,7 @@ const getOptimizedImageUrl = (url: string) => {
   // *** Add the remaining characters after /media/
   const target = "/media/"
   const index = url.indexOf(target) + target.length
-  console.log(index)
   const optimizedUrl = url.slice(0, index) + "crop/600/400/" + url.substring(index)
-  console.log(optimizedUrl)
 
   return optimizedUrl
 }
