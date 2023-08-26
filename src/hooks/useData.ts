@@ -9,17 +9,19 @@ interface FetchResponse<T> {
 const useData = <T>(endpoint: string) => {
   const [data, setData] = useState<T[]>([])
   const [error, setError] = useState<string>("")
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const controller = new AbortController()
 
+    setIsLoading(true)
     const fetchData = async () => {
-      setIsLoading(true)
       try {
         const response = await api.get<FetchResponse<T>>(endpoint, { signal: controller.signal })
         setData(response.data.results)
         setIsLoading(false)
+
+        setData(response.data.results)
       } catch (err) {
         if (err instanceof CanceledError) {
           return // Request was aborted, no need to handle the error
@@ -35,9 +37,9 @@ const useData = <T>(endpoint: string) => {
     return () => {
       controller.abort() // Cleanup: abort the ongoing request when the component unmounts
     }
-  }, [])
+  }, [endpoint])
 
-  return { data, error, isLoading }
+  return { isLoading, error, data }
 }
 
 export default useData
