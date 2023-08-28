@@ -1,8 +1,11 @@
-import { HStack, Image, List, ListItem, Spinner, Text } from "@chakra-ui/react"
-import useGenres from "../hooks/useGenres"
+import { Button, HStack, Image, List, ListItem, Spinner } from "@chakra-ui/react"
+import useGenres, { Genre } from "../hooks/useGenres"
 import getOptimizedImageUrl from "../services/imageUrl"
 
-const GenreList = () => {
+interface Props {
+  onSelectedGenre: (genre: Genre) => void
+}
+const GenreList = ({ onSelectedGenre }: Props) => {
   const { data, error, isLoading } = useGenres()
   if (error) return null
   return (
@@ -17,7 +20,9 @@ const GenreList = () => {
                 boxSize='32px'
                 borderRadius='8px'
               />
-              <Text fontSize='lg'>{genre.name}</Text>
+              <Button onClick={() => onSelectedGenre(genre)} variant='link' fontSize='lg'>
+                {genre.name === "Massively Multiplayer" ? "Multiplayer" : genre.name}
+              </Button>
             </HStack>
           </ListItem>
         ))}
