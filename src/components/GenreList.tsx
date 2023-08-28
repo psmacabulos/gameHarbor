@@ -4,9 +4,11 @@ import getOptimizedImageUrl from "../services/imageUrl"
 
 interface Props {
   onSelectedGenre: (genre: Genre) => void
+  selectedGenre: Genre | null
 }
-const GenreList = ({ onSelectedGenre }: Props) => {
+const GenreList = ({ onSelectedGenre, selectedGenre }: Props) => {
   const { data, error, isLoading } = useGenres()
+
   if (error) return null
   return (
     <>
@@ -20,7 +22,12 @@ const GenreList = ({ onSelectedGenre }: Props) => {
                 boxSize='32px'
                 borderRadius='8px'
               />
-              <Button onClick={() => onSelectedGenre(genre)} variant='link' fontSize='lg'>
+              <Button
+                onClick={() => onSelectedGenre(genre)}
+                variant='link'
+                fontSize='lg'
+                fontWeight={selectedGenre?.id === genre.id ? "bold" : "normal"}
+              >
                 {genre.name === "Massively Multiplayer" ? "Multiplayer" : genre.name}
               </Button>
             </HStack>
