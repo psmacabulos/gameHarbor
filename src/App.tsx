@@ -29,7 +29,7 @@ function App() {
         lg: "200px 1fr",
       }}
     >
-      <GridItem area='nav'>
+      <GridItem area='nav' paddingX='20px'>
         <Navbar />
       </GridItem>
       <Show above='lg'>
